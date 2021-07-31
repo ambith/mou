@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+        stages {
+        stage('Tardid') {
+            steps {
+                echo 'Sample Project Tardid'
+            }
+        }
+        stage('GIT HUB') {
+            steps {
+             checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '61406da4-691a-4d61-900b-3e9a16163741', url: '/opt/git/mas.git']]])
+            }
+        }
+        stage ("compile package the code") {
+                steps {
+                   sh "mvn clean package"
+                }
+            }
+        
+        }
+    }
